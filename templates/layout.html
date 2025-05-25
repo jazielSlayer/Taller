@@ -20,7 +20,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/trabajos">Trabajos Realizados</a>
                     </li>
-                    {% if session.role %}
+                    {% if session.user_id %}
                         {% if session.role == 'admin' %}
                         <a class="navbar-brand" href="/">Inicio</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,8 +38,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/citas">Citas</a>
                         </li>
-                        {% endif %}
-                        {% if session.role == 'client' %}
+                        {% elif session.role == 'client' %}
                         <a class="navbar-brand" href="/clientes_vista">Inicio</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -51,12 +50,26 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">Cerrar Sesión</a>
                         </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Registrarse</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="container pt-4">
+   <div class="container pt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         {% block body %}
         {% endblock %}
     </div>
