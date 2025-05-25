@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4" style="color: #333333;">Gestionar Proyectos</h1>
+    <form method="POST" action="/add_proyecto">
+        <div class="form-group">
+            <label for="id_cliente">Cliente</label>
+            <select class="form-control" id="id_cliente" name="id_cliente" required>
+                {% for cliente in clientes %}
+                <option value="{{ cliente[0] }}">{{ cliente[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" required>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="fecha_inicio">Fecha de Inicio</label>
+            <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+        </div>
+        <div class="form-group">
+            <label for="fecha_fin_estimada">Fecha Fin Estimada</label>
+            <input type="date" class="form-control" id="fecha_fin_estimada" name="fecha_fin_estimada">
+        </div>
+        <div class="form-group">
+            <label for="estado">Estado</label>
+            <select class="form-control" id="estado" name="estado" required>
+                <option value="En progreso">En progreso</option>
+                <option value="Completado">Completado</option>
+                <option value="Cancelado">Cancelado</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="costo_estimado">Costo Estimado</label>
+            <input type="number" class="form-control" id="costo_estimado" name="costo_estimado" step="0.01" min="0">
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Agregar Proyecto</button>
+    </form>
+
+    <h2 class="mt-5">Lista de Proyectos</h2>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin Estimada</th>
+                <th>Estado</th>
+                <th>Costo Estimado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proyecto in proyectos %}
+            <tr>
+                <td>{{ proyecto[0] }}</td>
+                <td>{{ proyecto[8] }} {{ proyecto[9] }}</td>
+                <td>{{ proyecto[2] }}</td>
+                <td>{{ proyecto[3] }}</td>
+                <td>{{ proyecto[4] }}</td>
+                <td>{{ proyecto[5] }}</td>
+                <td>{{ proyecto[6] }}</td>
+                <td>{{ proyecto[7] }}</td>
+                <td>
+                    <a href="/edit_proyecto/{{ proyecto[0] }}" class="btn btn-primary btn-sm">Editar</a>
+                    <a href="/delete_proyecto/{{ proyecto[0] }}" class="btn btn-danger btn-sm btn-delete">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

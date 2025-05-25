@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center my-4" style="color: #8B0000;">Nuestros Trabajos Realizados</h1>
+    <div class="row">
+        {% for trabajo in trabajos %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                {% if trabajo[4] %}
+                <img src="{{ trabajo[4] }}" class="card-img-top" alt="{{ trabajo[1] }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <img src="/static/img/placeholder.jpeg" class="card-img-top" alt="Sin imagen" style="height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ trabajo[1] }}</h5>
+                    <p class="card-text">{{ trabajo[2] }}</p>
+                    <p class="card-text"><small class="text-muted">Realizado el: {{ trabajo[3] }}</small></p>
+                    <p class="card-text"><strong>Categoría:</strong> {{ trabajo[5] }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

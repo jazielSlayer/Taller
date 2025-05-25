@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4" style="color: #333333;">Solicitar Cita</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="POST" action="/citas/solicitar">
+                <div class="form-group">
+                    <label for="fecha_programada">Fecha y Hora Programada</label>
+                    <input type="datetime-local" class="form-control" id="fecha_programada" name="fecha_programada" required>
+                </div>
+                <div class="form-group">
+                    <label for="servicio">Servicio</label>
+                    <input type="text" class="form-control" id="servicio" name="servicio" required>
+                </div>
+                <div class="form-group">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea class="form-control" id="observaciones" name="observaciones" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Solicitar Cita</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

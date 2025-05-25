@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller Mecánico</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/main.css') }}">
+</head>
+<body>
+    <div class="d-flex justify-content-center">
+        <a class="navbar-brand">
+            <img src="/static/img/logo_taller.png" alt="Logo Taller" width="150" height="40" class="d-inline-block align-top">
+        </a>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #343a40;">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/trabajos">Trabajos Realizados</a>
+                    </li>
+                    {% if session.role %}
+                        {% if session.role == 'admin' %}
+                        <a class="navbar-brand" href="/">Inicio</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/trabajos">Gestionar Trabajos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/inventario">Inventario</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/proyectos">Proyectos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/citas">Citas</a>
+                        </li>
+                        {% endif %}
+                        {% if session.role == 'client' %}
+                        <a class="navbar-brand" href="/clientes_vista">Inicio</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/citas/solicitar">Solicitar Cita</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Cerrar Sesión</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container pt-4">
+        {% block body %}
+        {% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

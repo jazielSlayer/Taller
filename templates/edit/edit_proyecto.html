@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4" style="color: #333333;">Editar Proyecto</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="POST" action="/update_proyecto/{{ proyecto[0] }}">
+                <div class="form-group">
+                    <label for="id_cliente">Cliente</label>
+                    <select class="form-control" id="id_cliente" name="id_cliente" required>
+                        {% for cliente in clientes %}
+                        <option value="{{ cliente[0] }}" {% if cliente[0] == proyecto[1] %}selected{% endif %}>{{ cliente[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" class="form-control" id="titulo" name="titulo" value="{{ proyecto[2] }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="4">{{ proyecto[3] }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="fecha_inicio">Fecha de Inicio</label>
+                    <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{ proyecto[4] }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="fecha_fin_estimada">Fecha Fin Estimada</label>
+                    <input type="date" class="form-control" id="fecha_fin_estimada" name="fecha_fin_estimada" value="{{ proyecto[5] }}">
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select class="form-control" id="estado" name="estado" required>
+                        <option value="En progreso" {% if proyecto[6] == 'En progreso' %}selected{% endif %}>En progreso</option>
+                        <option value="Completado" {% if proyecto[6] == 'Completado' %}selected{% endif %}>Completado</option>
+                        <option value="Cancelado" {% if proyecto[6] == 'Cancelado' %}selected{% endif %}>Cancelado</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="costo_estimado">Costo Estimado</label>
+                    <input type="number" class="form-control" id="costo_estimado" name="costo_estimado" value="{{ proyecto[7] }}" step="0.01" min="0">
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Actualizar Proyecto</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

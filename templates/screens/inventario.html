@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4" style="color: #333333;">Gestionar Inventario</h1>
+    <form method="POST" action="/add_inventario">
+        <div class="form-group">
+            <label for="nombre">Nombre del Item</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="cantidad">Cantidad</label>
+            <input type="number" class="form-control" id="cantidad" name="cantidad" min="0" required>
+        </div>
+        <div class="form-group">
+            <label for="precio_unitario">Precio Unitario</label>
+            <input type="number" class="form-control" id="precio_unitario" name="precio_unitario" step="0.01" min="0">
+        </div>
+        <div class="form-group">
+            <label for="categoria">Categoría</label>
+            <select class="form-control" id="categoria" name="categoria" required>
+                <option value="Piezas">Piezas</option>
+                <option value="Herramientas">Herramientas</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Agregar Item</button>
+    </form>
+
+    <h2 class="mt-5">Lista de Inventario</h2>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in inventario %}
+            <tr>
+                <td>{{ item[0] }}</td>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>{{ item[3] }}</td>
+                <td>{{ item[4] }}</td>
+                <td>{{ item[5] }}</td>
+                <td>
+                    <a href="/edit_inventario/{{ item[0] }}" class="btn btn-primary btn-sm">Editar</a>
+                    <a href="/delete_inventario/{{ item[0] }}" class="btn btn-danger btn-sm btn-delete">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

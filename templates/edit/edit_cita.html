@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4" style="color: #333333;">Editar Cita</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="POST" action="/update_cita/{{ cita[0] }}">
+                <div class="form-group">
+                    <label for="id_cliente">Cliente</label>
+                    <select class="form-control" id="id_cliente" name="id_cliente" required>
+                        {% for cliente in clientes %}
+                        <option value="{{ cliente[0] }}" {% if cliente[0] == cita[1] %}selected{% endif %}>{{ cliente[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fecha_programada">Fecha y Hora Programada</label>
+                    <input type="datetime-local" class="form-control" id="fecha_programada" name="fecha_programada" value="{{ cita[2]|datetimeformat }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="servicio">Servicio</label>
+                    <input type="text" class="form-control" id="servicio" name="servicio" value="{{ cita[3] }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select class="form-control" id="estado" name="estado" required>
+                        <option value="Programada" {% if cita[4] == 'Programada' %}selected{% endif %}>Programada</option>
+                        <option value="Realizada" {% if cita[4] == 'Realizada' %}selected{% endif %}>Realizada</option>
+                        <option value="Cancelada" {% if cita[4] == 'Cancelada' %}selected{% endif %}>Cancelada</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea class="form-control" id="observaciones" name="observaciones" rows="4">{{ cita[5] }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Actualizar Cita</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% macro datetimeformat(value) %}
+    {{ value.strftime('%Y-%m-%dT%H:%M') }}
+{% endmacro %}

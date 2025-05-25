@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4" style="color: #333333;">Editar Item de Inventario</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="POST" action="/update_inventario/{{ item[0] }}">
+                <div class="form-group">
+                    <label for="nombre">Nombre del Item</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ item[1] }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="4">{{ item[2] }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="number" class="form-control" id="cantidad" name="cantidad" value="{{ item[3] }}" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="precio_unitario">Precio Unitario</label>
+                    <input type="number" class="form-control" id="precio_unitario" name="precio_unitario" value="{{ item[4] }}" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <select class="form-control" id="categoria" name="categoria" required>
+                        <option value="Piezas" {% if item[5] == 'Piezas' %}selected{% endif %}>Piezas</option>
+                        <option value="Herramientas" {% if item[5] == 'Herramientas' %}selected{% endif %}>Herramientas</option>
+                        <option value="Otro" {% if item[5] == 'Otro' %}selected{% endif %}>Otro</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Actualizar Item</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4" style="color: #333333;">Mis Proyectos y Citas</h1>
+
+    <h2 class="mt-5">Mis Proyectos</h2>
+    {% if proyectos %}
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha Fin Estimada</th>
+                <th>Estado</th>
+                <th>Costo Estimado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proyecto in proyectos %}
+            <tr>
+                <td>{{ proyecto[2] }}</td>
+                <td>{{ proyecto[3] }}</td>
+                <td>{{ proyecto[4] }}</td>
+                <td>{{ proyecto[5] }}</td>
+                <td>{{ proyecto[6] }}</td>
+                <td>{{ proyecto[7] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-center">No tienes proyectos asignados.</p>
+    {% endif %}
+
+    <h2 class="mt-5">Mis Citas</h2>
+    {% if citas %}
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Fecha y Hora</th>
+                <th>Servicio</th>
+                <th>Estado</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cita in citas %}
+            <tr>
+                <td>{{ cita[2] }}</td>
+                <td>{{ cita[3] }}</td>
+                <td>{{ cita[4] }}</td>
+                <td>{{ cita[5] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-center">No tienes citas programadas.</p>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="/citas/solicitar" class="btn btn-primary">Solicitar Nueva Cita</a>
+    </div>
+</div>
+{% endblock %}

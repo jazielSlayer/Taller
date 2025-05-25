@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4" style="color: #333333;">Editar Trabajo</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="POST" action="/update_trabajo/{{ trabajo[0] }}">
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" class="form-control" id="titulo" name="titulo" value="{{ trabajo[1] }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="4">{{ trabajo[2] }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="fecha_realizacion">Fecha de Realización</label>
+                    <input type="date" class="form-control" id="fecha_realizacion" name="fecha_realizacion" value="{{ trabajo[3] }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="imagen">URL de la Imagen</label>
+                    <input type="text" class="form-control" id="imagen" name="imagen" value="{{ trabajo[4] }}">
+                </div>
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <select class="form-control" id="categoria" name="categoria" required>
+                        <option value="Reparación" {% if trabajo[5] == 'Reparación' %}selected{% endif %}>Reparación</option>
+                        <option value="Pintura" {% if trabajo[5] == 'Pintura' %}selected{% endif %}>Pintura</option>
+                        <option value="Mantenimiento" {% if trabajo[5] == 'Mantenimiento' %}selected{% endif %}>Mantenimiento</option>
+                        <option value="Otro" {% if trabajo[5] == 'Otro' %}selected{% endif %}>Otro</option>
+                    </select>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="visible" name="visible" {% if trabajo[6] == 1 %}checked{% endif %}>
+                    <label class="form-check-label" for="visible">Visible para clientes</label>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Actualizar Trabajo</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

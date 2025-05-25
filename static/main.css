@@ -1,0 +1,30 @@
+body {
+    background: #e6e6e6; /* Fondo gris claro para un look industrial */
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #343a40 !important; /* Gris oscuro para la barra de navegación */
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 200px;
+}
+
+.btn-primary {
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+.btn-primary:hover {
+    background-color: #23272b;
+    border-color: #23272b;
+}

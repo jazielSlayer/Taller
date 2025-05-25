@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4" style="color: #333333;">Gestionar Trabajos</h1>
+    <form method="POST" action="/add_trabajo">
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" required>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="fecha_realizacion">Fecha de Realización</label>
+            <input type="date" class="form-control" id="fecha_realizacion" name="fecha_realizacion" required>
+        </div>
+        <div class="form-group">
+            <label for="imagen">URL de la Imagen</label>
+            <input type="text" class="form-control" id="imagen" name="imagen">
+        </div>
+        <div class="form-group">
+            <label for="categoria">Categoría</label>
+            <select class="form-control" id="categoria" name="categoria" required>
+                <option value="Reparación">Reparación</option>
+                <option value="Pintura">Pintura</option>
+                <option value="Mantenimiento">Mantenimiento</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="visible" name="visible" checked>
+            <label class="form-check-label" for="visible">Visible para clientes</label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Agregar Trabajo</button>
+    </form>
+
+    <h2 class="mt-5">Lista de Trabajos</h2>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Imagen</th>
+                <th>Categoría</th>
+                <th>Visible</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trabajo in trabajos %}
+            <tr>
+                <td>{{ trabajo[0] }}</td>
+                <td>{{ trabajo[1] }}</td>
+                <td>{{ trabajo[2] }}</td>
+                <td>{{ trabajo[3] }}</td>
+                <td>
+                    {% if trabajo[4] %}
+                    <img src="{{ trabajo[4] }}" alt="{{ trabajo[1] }}" style="max-width: 50px; max-height: 50px;">
+                    {% else %}
+                    Sin imagen
+                    {% endif %}
+                </td>
+                <td>{{ trabajo[5] }}</td>
+                <td>{{ 'Sí' if trabajo[6] == 1 else 'No' }}</td>
+                <td>
+                    <a href="/edit_trabajo/{{ trabajo[0] }}" class="btn btn-primary btn-sm">Editar</a>
+                    <a href="/delete_trabajo/{{ trabajo[0] }}" class="btn btn-danger btn-sm btn-delete">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
