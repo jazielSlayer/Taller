@@ -48,19 +48,20 @@ def login():
         email = request.form['email']
         contrasena = request.form['contrasena']
         cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM Clientes WHERE email = %s", (email,))
-        cliente = cursor.fetchone()
+        cursor.execute("SELECT * FROM Users WHERE Email = %s", (email,))
+        user = cursor.fetchone()
         cursor.close()
-        if cliente and bcrypt.checkpw(contrasena.encode('utf-8'), cliente[8].encode('utf-8')):
-            session['user_id'] = cliente[0]
-            session['es_admin'] = cliente[7]
-            if cliente[7] == 1:
-                return redirect('/')
+        if user and bcrypt.checkpw(contrasena.encode('utf-8'), user[2].encode('utf-8')):  # user[2] es Password
+            session['user_id'] = user[0]  # user[0] es IdUser
+            session['role'] = user[3]     # user[3] es Role
+            if user[3] == 'admin':        # Verifica si el rol es 'admin'
+                return redirect('/')      # Redirige a la página principal para administradores
             else:
-                return redirect('/vista_clientes')
+                return redirect('/clientes_vista')  # Redirige a la vista de clientes
         else:
             return render_template('/screens/login.html', error="Credenciales incorrectas")
     return render_template('/screens/login.html')
+
 # Ruta para registro
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -80,14 +81,14 @@ def register():
             return redirect(url_for('register'))
         
         if role == 'client':
-            nombre = request.form['nombre']
+            username = request.form['username']
             apellido = request.form['apellido']
             telefono = request.form['telefono']
             direccion = request.form['direccion']
             
             # Insertar en Clientes
             cur.execute("INSERT INTO Clientes (Nombre, Apellido, Email, Telefono, Direccion, EstadoCuenta) VALUES (%s, %s, %s, %s, %s, %s)",
-                        (nombre, apellido, email, telefono, direccion, 0))
+                        (username, apellido, email, telefono, direccion, 0))
             mysql.connection.commit()
             
             # Obtener el IdCliente recién creado
@@ -113,7 +114,7 @@ def logout():
     session.pop('user_id', None)
     session.pop('role', None)
     flash('Has cerrado sesión.', 'success')
-    return redirect(url_for('/login'))
+    return redirect(url_for('login'))  # Cambia '/login' por 'login'
 
 # Ruta pública para ver trabajos realizados
 @app.route('/trabajos')
@@ -140,7 +141,7 @@ def clientes_vista():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM Proyectos WHERE IdCliente = %s', (session['user_id'],))
     proyectos = cur.fetchall()
-    return render_template('/vistas/vista_clientes.html', proyectos=proyectos)
+    return render_template('/vistas/vista_cliente.html', proyectos=proyectos)
 
 @app.route('/admin/trabajos')
 @login_required
