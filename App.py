@@ -120,7 +120,7 @@ def logout():
 @app.route('/trabajos')
 def trabajos():
     cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM Trabajos WHERE Visible = 1')
+    cur.execute('SELECT * FROM Trabajos WHERE Visible = 0')
     data = cur.fetchall()
     return render_template('/screens/trabajos.html', trabajos=data)
 
